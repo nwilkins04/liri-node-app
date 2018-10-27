@@ -1,9 +1,25 @@
 require("dotenv").config();
 
-concert-this
+var spotify = require('spotify');
 
-spotify-this-song
+//concert-this
 
-movie-this
+//spotify-this-song
+function spotifyThisSong() {
+    if (song === undefined) {
+        song = "The Sign"
+    };
+};
+
+
+spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
+    if ( err ) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+ 
+});
+
+//movie-this
 
 //do-what-it-says
