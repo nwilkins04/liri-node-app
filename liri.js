@@ -21,14 +21,6 @@ var spotify = new Spotify({
 //concert-this
 
 //spotify-this-song
-
-//spotify search from docs
-// search: function({ type: 'artist OR album OR track', query: 'My search query', limit: 20 }, callback);
-// function spotifyThisSong() {
-//     if (song === undefined) {
-//         song = "The Sign"
-//     };
-// };
 function spotifyThisSong(query='The Sign ace of base'){
 
 //from docs
@@ -40,7 +32,7 @@ spotify.search({ type: 'track', query: query, limit:1 }, function(err, data) {
   console.log('Artists Name: ' + data.tracks.items[0].album.artists[0].name); 
   console.log('Song name: ' + data.tracks.items[0].name); 
   console.log('Album name: ' + data.tracks.items[0].album.name); 
-  console.log('Popularity: ' + data.tracks.items[0].popularity); 
+  console.log('Popularity: ' + data.tracks.items[0].popularity);
   
   });
 }
@@ -56,15 +48,15 @@ function commandHandler(argvCommand, argvOption) {
         }
         spotifyThisSong();
     }
-    else if (argvCommand === 'deposit') {
+    else if (argvCommand === 'concert-this') {
         console.log('display deposit')
       
     }
-    else if (argvCommand === 'withdrawl') {
+    else if (argvCommand === 'movie this') {
         console.log('display withdrawl')
         
     }
-    else if (argvCommand === 'lotto') {
+    else if (argvCommand === 'do-what-it-saya') {
         console.log('display lotto')
     }
     else { 
