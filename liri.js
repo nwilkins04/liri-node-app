@@ -6,7 +6,7 @@ var Spotify = require('node-spotify-api');
 //needed for reading and writing files
 var fs = require("fs");
 //required for bands in town
-var bandsintown = require('bandsintown');
+var request = require("request");
 
 var spotify = new Spotify({
     id: SPOTIFY_API.ID,
@@ -17,16 +17,9 @@ var spotify = new Spotify({
 var command = process.argv[2];
 var option = process.argv[3] || null;
 
-//to read key.js file
-// fs.readFile("key.js", "utf8", function(error, data) {
-//     if(error) {
-//         return console.log(error)
-//     }
-// })
-
 //concert-this
-function concertThisBand() {
-    bandsintown ("https://rest.bandsintown.com/artists/" + option + "/events?app_id=codingbootcamp"), function(error, response, body) {
+function concertThisBand(option) {
+    request ("https://rest.bandsintown.com/artists/" + option + "/events?app_id=codingbootcamp"), function(error, response, body) {
         if(error && response.statusCode === 200) {
             console.log("info: " + JSON.parse(body));
         }
@@ -45,10 +38,25 @@ spotify.search({ type: 'track', query: query, limit:1 }, function(err, data) {
   console.log('Artists Name: ' + data.tracks.items[0].album.artists[0].name); 
   console.log('Song name: ' + data.tracks.items[0].name); 
   console.log('Album name: ' + data.tracks.items[0].album.name); 
-  console.log('Popularity: ' + data.tracks.items[0].popularity);
+  console.log('Preview link: ' + data.tracks.items[0].preview_url);
   
   });
 }
+
+//movie-this
+
+function movieThis(option) {
+    if (movieName = undefined) {
+        movieName = "Mr. Nobody"
+    }
+    request("http://www.omdbapi.com/?t=" + option + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
+
+  if (!error && response.statusCode === 200) {
+
+    console.log("The movie" + JSON.parse(body).imdbRating);
+  }
+});
+};
 //This runs whole app
 
 commandHandler(command, option);
@@ -68,12 +76,16 @@ function commandHandler(argvCommand, argvOption) {
         concertThisBand();
       
     }
-    else if (argvCommand === 'movie this') {
-        console.log('movie')
+    else if (argvCommand === 'movie-this') {
+        if(argvOption) {
+            movieThis(argvOption);
+            return;
+        }
+        movieThis();
         
     }
     else if (argvCommand === 'do-what-it-saya') {
-        console.log('display lotto')
+        console.log('other stuff')
     }
     else { 
         console.log('ERROR: enter either total, deposit, withdral, or lotto to contine')
