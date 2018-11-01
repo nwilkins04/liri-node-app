@@ -53,7 +53,14 @@ function movieThis(option) {
 
   if (!error && response.statusCode === 200) {
 
-    console.log("The movie" + JSON.parse(body).imdbRating);
+    console.log("Movie title: " + JSON.parse(body).Title);
+    console.log("Movie came out: " + JSON.parse(body).Year);
+    console.log("IMDB rating: " + JSON.parse(body).imdbRating);
+    console.log("Rotten tomato rating: " + JSON.parse(body).Ratings[1].Value);
+    console.log("Country: " + JSON.parse(body).Country);
+    console.log("Language: " + JSON.parse(body).Language);
+    console.log("Plot: " + JSON.parse(body).Plot);
+    console.log("Actors: " + JSON.parse(body).Actors);
   }
 });
 };
