@@ -5,11 +5,17 @@ var SPOTIFY_API = require('./key.js');
 var Spotify = require('node-spotify-api');
 //needed for reading and writing files
 var fs = require("fs");
+//required for bands in town
+var bandsintown = require('bandsintown');
 
 var spotify = new Spotify({
     id: SPOTIFY_API.ID,
     secret: SPOTIFY_API.SECRET
   });
+
+//to take in command line
+var command = process.argv[2];
+var option = process.argv[3] || null;
 
 //to read key.js file
 // fs.readFile("key.js", "utf8", function(error, data) {
@@ -19,6 +25,13 @@ var spotify = new Spotify({
 // })
 
 //concert-this
+function concertThisBand() {
+    bandsintown ("https://rest.bandsintown.com/artists/" + option + "/events?app_id=codingbootcamp"), function(error, response, body) {
+        if(error && response.statusCode === 200) {
+            console.log("info: " + JSON.parse(body));
+        }
+    }
+};
 
 //spotify-this-song
 function spotifyThisSong(query='The Sign ace of base'){
@@ -37,8 +50,7 @@ spotify.search({ type: 'track', query: query, limit:1 }, function(err, data) {
   });
 }
 //This runs whole app
-var command = process.argv[2];
-var option = process.argv[3] || null;
+
 commandHandler(command, option);
 function commandHandler(argvCommand, argvOption) {
     if (argvCommand === 'spotify-this-song') {
@@ -49,11 +61,15 @@ function commandHandler(argvCommand, argvOption) {
         spotifyThisSong();
     }
     else if (argvCommand === 'concert-this') {
-        console.log('display deposit')
+        if(argvOption) {
+            concertThisBand(argvOption);
+            return;
+        }
+        concertThisBand();
       
     }
     else if (argvCommand === 'movie this') {
-        console.log('display withdrawl')
+        console.log('movie')
         
     }
     else if (argvCommand === 'do-what-it-saya') {
