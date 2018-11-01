@@ -64,6 +64,18 @@ function movieThis(option) {
   }
 });
 };
+
+//do-what-it-says
+function doWhatItSays() {
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        if (error) {
+            return (error)
+        }
+        console.log(data);
+        var dataArray = data.split(",");
+    })
+}
+
 //This runs whole app
 
 commandHandler(command, option);
@@ -92,13 +104,13 @@ function commandHandler(argvCommand, argvOption) {
         
     }
     else if (argvCommand === 'do-what-it-saya') {
-        console.log('other stuff')
+        if(argvOption) {
+            doWhatItSays(argvOption);
+            return;
+        }
+        doWhatItSays();
     }
     else { 
-        console.log('ERROR: enter either total, deposit, withdral, or lotto to contine')
+        console.log('ERROR: you fucked up!')
     }
 }
-
-//movie-this
-
-//do-what-it-says
