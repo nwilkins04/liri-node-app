@@ -103,7 +103,7 @@ function commandHandler(argvCommand, argvOption) {
         movieThis();
         
     }
-    else if (argvCommand === 'do-what-it-saya') {
+    else if (argvCommand === 'do-what-it-says') {
         if(argvOption) {
             doWhatItSays(argvOption);
             return;
